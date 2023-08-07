@@ -1,16 +1,38 @@
 {
-  "pluginAlias": "ExampleHomebridgePlugin",
+  "pluginAlias": "AirplayWatcherHomebridgePlugin",
   "pluginType": "platform",
   "singular": true,
   "schema": {
-    "type": "object",
-    "properties": {
-      "name": {
-        "title": "Name",
-        "type": "string",
-        "required": true,
-        "default": "Example Dynamic Platform"
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "devices": {
+      "type": "array",
+      "items": {
+        "title": "Devices",
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Device Name",
+            "type": "string",
+            "placeholder": "Airport Express",
+            "required": true,
+            "description": "The name of the device as configured in the Apple Home app. Case sensitive."
+          }
+        }
       }
     }
-  }
+  },
+  "layout": [
+    {
+      "key": "devices",
+      "type": "array",
+      "orderable": false,
+      "buttonText": "Add Airplay Device",
+      "items": [
+        "devices[].name"
+      ]
+    }
+  ]
 }
