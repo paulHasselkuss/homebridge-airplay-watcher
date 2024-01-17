@@ -1,5 +1,5 @@
 # Homebridge Airplay Watcher
-[![Build Status](https://img.shields.io/github/actions/workflow/status/paulHasselkuss/homebridge-airplay-watcher/build.yml?branch=main)](https://github.com/paulHasselkuss/homebridge-airplay-watcher/actions/)
+[![Build and Lint](https://github.com/paulHasselkuss/homebridge-airplay-watcher/actions/workflows/build.yml/badge.svg)](https://github.com/paulHasselkuss/homebridge-airplay-watcher/actions/workflows/build.yml)
 [![License](https://img.shields.io/github/license/paulHasselkuss/homebridge-airplay-watcher)](LICENSE.md)
 
 This [Homebridge](http://homebridge.io) plugin allows you to watch for devices starting or stopping playing airplay audio. For each device, a motion detector is exposed that becomes active when audio is played, and inactive when no audio is being played.
