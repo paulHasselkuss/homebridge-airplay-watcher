@@ -8,7 +8,7 @@ import { AirplayWatcherHomebridgePlatform } from './platform';
  * Each accessory may expose multiple services of different service types.
  */
 export class AirplayAccessory {
-  private service: Service;
+  private readonly service: Service;
 
   constructor(
     private readonly platform: AirplayWatcherHomebridgePlatform,
@@ -31,7 +31,7 @@ export class AirplayAccessory {
   }
 
   updateStatus(value: boolean) {
-    this.platform.log.debug('Triggering updateStatus:', value);
+    this.platform.log.debug('Triggering updateStatus for %s: %s', this.accessory.context.device.name, value);
     this.service.updateCharacteristic(this.platform.Characteristic.MotionDetected, value);
   }
 

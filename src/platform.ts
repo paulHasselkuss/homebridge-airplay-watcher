@@ -1,8 +1,8 @@
 import { API, DynamicPlatformPlugin, Logger, PlatformAccessory, PlatformConfig, Service, Characteristic } from 'homebridge';
+import mDnsSd from 'node-dns-sd';
 
 import { PLATFORM_NAME, PLUGIN_NAME } from './settings';
 import { AirplayAccessory } from './platformAccessory';
-import mDnsSd from 'node-dns-sd';
 
 /**
  * HomebridgePlatform
@@ -10,6 +10,9 @@ import mDnsSd from 'node-dns-sd';
  * parse the user config and discover/register accessories with Homebridge.
  */
 export class AirplayWatcherHomebridgePlatform implements DynamicPlatformPlugin {
+  private static readonly RELAY_BITMASK = 0x800;
+  private static readonly SESSION_ACTIVE_BITMASK = 0x20000;
+
   public readonly Service: typeof Service = this.api.hap.Service;
   public readonly Characteristic: typeof Characteristic = this.api.hap.Characteristic;
 
@@ -116,9 +119,11 @@ export class AirplayWatcherHomebridgePlatform implements DynamicPlatformPlugin {
     return name + '._airplay._tcp.local';
   }
 
-  private parseAirplayStatus(status: string): boolean {
-    //playing = 0x804; not-playing = 0x04
-    return status === '0x804';
+  private parseAirplayStatus(status): boolean {
+    // DeviceSupportsRelay is reliable for audio devises (Homepod, Airport Express),
+    // while ReceiverSessionIsActive is reliable for playback on an AppleTV.
+    // See https://github.com/openairplay/airplay-spec/blob/master/src/status_flags.md.
+    return ((AirplayWatcherHomebridgePlatform.RELAY_BITMASK | AirplayWatcherHomebridgePlatform.SESSION_ACTIVE_BITMASK) & status) > 0;
   }
 
   setupDnsWatcher() {
