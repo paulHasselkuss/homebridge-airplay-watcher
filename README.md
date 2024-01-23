@@ -12,7 +12,7 @@ The easiest way to use this plugin is to use [homebridge-config-ui-x](https://gi
 "platform": "AirplayWatcherHomebridgePlugin",
   "devices": [
     {
-      "name": "The name of the device as configured in the Apple Home app (case sensitive), e.g. 'MyAirportExpress'."
+      "name": "The name of the device as configured in the Apple Home app (case sensitive, spaces are supported)., e.g. 'My AirportExpress'."
     }
   ]
 }

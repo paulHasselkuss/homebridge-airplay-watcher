@@ -1,11 +1,11 @@
 import { API } from 'homebridge';
 
 import { PLATFORM_NAME } from './settings';
-import { AirplayWatcherHomebridgePlatform } from './platform';
+import { AirplayWatcherPlatform } from './airplayWatcherPlatform';
 
 /**
- * This method registers the platform with Homebridge
+ * Registers the platform with Homebridge.
  */
 export = (api: API) => {
-  api.registerPlatform(PLATFORM_NAME, AirplayWatcherHomebridgePlatform);
+  api.registerPlatform(PLATFORM_NAME, AirplayWatcherPlatform);
 };
