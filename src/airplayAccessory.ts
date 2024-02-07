@@ -24,6 +24,9 @@ export class AirplayAccessory {
 
     // set the service name, displayed as the default name on the Home app
     this.motionSensor.setCharacteristic(this.platform.Characteristic.Name, accessory.context.name);
+
+    // default
+    this.motionSensor.updateCharacteristic(this.platform.Characteristic.MotionDetected, false);
   }
 
   parsePackage(rdata) {
