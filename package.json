@@ -1,10 +1,10 @@
 {
-  "private": true,
   "displayName": "Homebridge Airplay Watcher",
   "name": "homebridge-airplay-watcher",
   "version": "1.0.0",
-  "description": "Watches for devices starting or stopping playing airplay audio.",
+  "description": "Homebridge plugin that watches for devices starting or stopping playing airplay audio",
   "license": "MIT",
+  "author": "paulHasselkuss",
   "repository": {
     "type": "git",
     "url": "https://github.com/paulHasselkuss/homebridge-airplay-watcher.git"
@@ -24,20 +24,21 @@
     "prepublishOnly": "npm run lint && npm run build"
   },
   "keywords": [
-    "homebridge-plugin"
+    "homebridge-plugin",
+    "airplay"
   ],
   "dependencies": {
     "node-dns-sd": "^1.0.1"
   },
   "devDependencies": {
-    "@types/node": "^18.19.14",
-    "@typescript-eslint/eslint-plugin": "^6.21.0",
-    "@typescript-eslint/parser": "^6.21.0",
-    "eslint": "^8.45.0",
+    "@types/node": "^18.17.0",
+    "@typescript-eslint/eslint-plugin": "^7.8.0",
+    "@typescript-eslint/parser": "^7.8.0",
+    "eslint": "^8.56.0",
     "homebridge": "^1.6.0",
-    "nodemon": "^3.0.3",
+    "nodemon": "^3.1.0",
     "rimraf": "^5.0.5",
     "ts-node": "^10.9.1",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.5"
   }
 }
