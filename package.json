@@ -1,7 +1,7 @@
 {
   "displayName": "Homebridge Airplay Watcher",
   "name": "homebridge-airplay-watcher",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Homebridge plugin that watches for devices starting or stopping playing airplay audio",
   "license": "MIT",
   "author": "paulHasselkuss",
@@ -13,8 +13,8 @@
     "url": "https://github.com/paulHasselkuss/homebridge-airplay-watcher/issues"
   },
   "engines": {
-    "node": "^18.17.0 || ^20.9.0",
-    "homebridge": "^1.6.0"
+    "node": "^18.17.0 || ^20.9.0 || ^22.8.0",
+    "homebridge": "^1.6.0 || ^2.0.0-beta.0"
   },
   "main": "dist/index.js",
   "scripts": {
