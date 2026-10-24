@@ -1,6 +1,6 @@
-import {Service, PlatformAccessory} from 'homebridge';
+import { Service, PlatformAccessory } from "homebridge";
 
-import { AirplayWatcherPlatform } from './airplayWatcherPlatform';
+import { AirplayWatcherPlatform } from "./airplayWatcherPlatform";
 
 /**
  * Airplay Accessory
@@ -18,37 +18,64 @@ export class AirplayAccessory {
     private readonly platform: AirplayWatcherPlatform,
     private readonly accessory: PlatformAccessory,
   ) {
-    this.accessoryInfo = this.accessory.getService(this.platform.Service.AccessoryInformation)!;
-    this.motionSensor = this.accessory.getService(this.platform.Service.MotionSensor) ||
+    this.accessoryInfo = this.accessory.getService(
+      this.platform.Service.AccessoryInformation,
+    )!;
+    this.motionSensor =
+      this.accessory.getService(this.platform.Service.MotionSensor) ||
       this.accessory.addService(this.platform.Service.MotionSensor);
 
     // set the service name, displayed as the default name on the Home app
-    this.motionSensor.setCharacteristic(this.platform.Characteristic.Name, accessory.context.name);
+    this.motionSensor.setCharacteristic(
+      this.platform.Characteristic.Name,
+      accessory.context.name,
+    );
 
     // default
-    this.motionSensor.updateCharacteristic(this.platform.Characteristic.MotionDetected, false);
+    this.motionSensor.updateCharacteristic(
+      this.platform.Characteristic.MotionDetected,
+      false,
+    );
   }
 
   parsePackage(rdata) {
-    this.platform.log.debug('Parsing package for "%s":\n%s', this.accessory.displayName, rdata);
+    this.platform.log.debug(
+      "Parsing package for \"%s\":\n%s",
+      this.accessory.displayName,
+      rdata,
+    );
 
     // MotionSensor
     if (rdata.flags) {
       const isActive = this.isPlaybackActive(rdata.flags);
-      this.motionSensor.updateCharacteristic(this.platform.Characteristic.MotionDetected, isActive);
+      this.motionSensor.updateCharacteristic(
+        this.platform.Characteristic.MotionDetected,
+        isActive,
+      );
     }
 
     // AccessoryInformation
     this.setAccessoryInfo(this.platform.Characteristic.Model, rdata.model);
-    this.setAccessoryInfo(this.platform.Characteristic.Manufacturer, rdata.manufacturer);
-    this.setAccessoryInfo(this.platform.Characteristic.SerialNumber, rdata.serialNumber);
+    this.setAccessoryInfo(
+      this.platform.Characteristic.Manufacturer,
+      rdata.manufacturer,
+    );
+    this.setAccessoryInfo(
+      this.platform.Characteristic.SerialNumber,
+      rdata.serialNumber,
+    );
   }
 
   private isPlaybackActive(status): boolean {
     // DeviceSupportsRelay is reliable for audio devices (Homepod, Airport Express),
     // while ReceiverSessionIsActive is reliable for playback on an AppleTV.
     // See https://github.com/openairplay/airplay-spec/blob/master/src/status_flags.md.
-    return ((AirplayAccessory.RELAY_BITMASK | AirplayAccessory.SESSION_ACTIVE_BITMASK) & status) > 0;
+    return (
+      ((AirplayAccessory.RELAY_BITMASK |
+        AirplayAccessory.SESSION_ACTIVE_BITMASK) &
+        status) >
+      0
+    );
   }
 
   private setAccessoryInfo(characteristic, value) {
@@ -56,5 +83,4 @@ export class AirplayAccessory {
       this.accessoryInfo.setCharacteristic(characteristic, value);
     }
   }
-
 }

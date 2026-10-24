@@ -1,8 +1,8 @@
-import { API, DynamicPlatformPlugin, Logger, PlatformAccessory, PlatformConfig, Service, Characteristic } from 'homebridge';
-import mDnsSd from 'node-dns-sd';
+import { API, DynamicPlatformPlugin, Logger, PlatformAccessory, PlatformConfig, Service, Characteristic } from "homebridge";
+import mDnsSd from "node-dns-sd";
 
-import { PLATFORM_NAME, PLUGIN_NAME } from './settings';
-import { AirplayAccessory } from './airplayAccessory';
+import { PLATFORM_NAME, PLUGIN_NAME } from "./settings";
+import { AirplayAccessory } from "./airplayAccessory";
 
 /**
  * AirplayWatcherPlatform
@@ -23,19 +23,19 @@ export class AirplayWatcherPlatform implements DynamicPlatformPlugin {
   ) {
     // Fired when all cached accessories have been restored. Dynamic Platform plugins should only
     // register new accessories after this event was fired, in order to ensure they weren't added already.
-    this.api.on('didFinishLaunching', () => {
-      log.debug('Executed didFinishLaunching callback');
+    this.api.on("didFinishLaunching", () => {
+      log.debug("Executed didFinishLaunching callback");
       this.registerDevices();
       this.startWatcher();
     });
 
     // Fired when Homebridge attempts to shut down. Should stop all ongoing watchers, etc.
-    this.api.on('shutdown', () => {
-      log.debug('Executed shutdown callback');
+    this.api.on("shutdown", () => {
+      log.debug("Executed shutdown callback");
       this.stopWatcher();
     });
 
-    this.log.debug('Finished initializing platform:', this.config.name);
+    this.log.debug("Finished initializing platform:", this.config.name);
   }
 
   /**
@@ -43,7 +43,7 @@ export class AirplayWatcherPlatform implements DynamicPlatformPlugin {
    * It should be used to set up event handlers for characteristics and update any respective values.
    */
   configureAccessory(accessory: PlatformAccessory) {
-    this.log.info('Loading accessory from cache:', accessory.displayName);
+    this.log.info("Loading accessory from cache:", accessory.displayName);
 
     // add the restored accessory to the cache
     this.accessories.push(accessory);
@@ -61,7 +61,7 @@ export class AirplayWatcherPlatform implements DynamicPlatformPlugin {
       let accessory = this.accessories.find(accessory => accessory.UUID === uuid);
 
       if (!accessory) {
-        this.log.info('Adding new accessory:', name);
+        this.log.info("Adding new accessory:", name);
 
         // create a new accessory
         accessory = new this.api.platformAccessory(name, uuid);
@@ -74,7 +74,7 @@ export class AirplayWatcherPlatform implements DynamicPlatformPlugin {
         // link the accessory to the platform
         this.api.registerPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [accessory]);
       } else {
-        this.log.info('Accessory restored from cache:', accessory.displayName);
+        this.log.info("Accessory restored from cache:", accessory.displayName);
         // no need to update the accessory, we only store the name from config which is also used to identify cached devices
       }
       this.devices.set(this.airplayServiceName(name), new AirplayAccessory(this, accessory));
@@ -83,7 +83,7 @@ export class AirplayWatcherPlatform implements DynamicPlatformPlugin {
 
   private startWatcher() {
     if (!this.devices) {
-      this.log.warn('No devices configured.');
+      this.log.warn("No devices configured.");
       return;
     }
 
@@ -100,17 +100,17 @@ export class AirplayWatcherPlatform implements DynamicPlatformPlugin {
     };
 
     mDnsSd.startMonitoring().then(() => {
-      this.log.debug('mDNS watcher started...');
+      this.log.debug("mDNS watcher started...");
     }).catch((error) => {
-      this.log.error('mDNS watcher encountered an error:', error);
+      this.log.error("mDNS watcher encountered an error:", error);
     });
   }
 
   private stopWatcher() {
     mDnsSd.stopMonitoring().then(() => {
-      this.log.debug('mDNS monitor stopped.');
+      this.log.debug("mDNS monitor stopped.");
     }).catch((error) => {
-      this.log.warn('Error while stopping mDNS monitor:', error);
+      this.log.warn("Error while stopping mDNS monitor:", error);
     });
   }
 

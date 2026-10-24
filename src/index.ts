@@ -1,7 +1,7 @@
-import { API } from 'homebridge';
+import { API } from "homebridge";
 
-import { PLATFORM_NAME } from './settings';
-import { AirplayWatcherPlatform } from './airplayWatcherPlatform';
+import { PLATFORM_NAME } from "./settings";
+import { AirplayWatcherPlatform } from "./airplayWatcherPlatform";
 
 /**
  * Registers the platform with Homebridge.
